@@ -36,3 +36,19 @@
     transform: rotate(360deg);
   }
 }
+.producto-card {
+  position: relative;
+}
+
+.image-container {
+  overflow: hidden;
+  height: 200px; /* Ajusta la altura deseada para todas las imágenes */
+  background-color: white;
+}
+
+.producto-card .card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center; /* Centra la imagen dentro del contenedor */
+}
