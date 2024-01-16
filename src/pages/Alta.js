@@ -19,7 +19,7 @@ const Alta = () => {
 
     try {
       // Realiza la solicitud a tu API para agregar el ítem
-      const respuesta = await axios.post('http://localhost:3000/api/productos/', formulario);
+      const respuesta = await axios.post('http://honey-whispering-ragamuffin.glitch.me/api/productos/', formulario);
       setItemAgregado(respuesta.data);
       handleMostrarModal();
     } catch (error) {
@@ -35,7 +35,7 @@ const Alta = () => {
   const handleMostrarModal = async () => {
     try {
       // Realiza la solicitud a tu API para agregar el ítem
-      const respuesta = await axios.post('http://localhost:3000/api/productos/', formulario);
+      const respuesta = await axios.post('http://honey-whispering-ragamuffin.glitch.me/api/productos/', formulario);
       setItemAgregado(respuesta.data);
       setShowModal(true);
       // Llama a obtenerDetallesItem después de asignar respuesta.data a itemAgregado
@@ -49,7 +49,7 @@ const Alta = () => {
   const obtenerDetallesItem = async (item) => {
     try {
       // Realiza una solicitud GET para obtener los detalles del ítem recién agregado
-      const respuesta = await axios.get(`http://localhost:3000/api/productos/${item._id}`);
+      const respuesta = await axios.get(`http://honey-whispering-ragamuffin.glitch.me/api/productos/${item._id}`);
       setItemAgregado(respuesta.data);
     } catch (error) {
       console.error('Error al obtener detalles del ítem:', error);

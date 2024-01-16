@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Nav, Navbar, Dropdown, Button } from "react-bootstrap";
+import { Container, Nav, Navbar } from "react-bootstrap";
 import { Routes, Route, Link } from "react-router-dom";
 import { useState } from "react";
 import Home from "../pages/Home"; // Asegúrate de importar el componente Home correctamente
@@ -70,7 +70,7 @@ function Navigation() {
         />
         <Route path="/contacto" element={<Contacto />} />
         <Route path="/alta" element={<Alta />} />
-        <Route path="/carrito" element={<Carrito carrito={carrito} />} />
+        <Route path="/carrito" element={<Carrito carrito={carrito} eliminarDelCarrito={eliminarDelCarrito} />} />
       </Routes>
     </>
   );

@@ -23,7 +23,7 @@ const EditModal = ({ producto, showModal, onClose, recargarProductos }) => {
     try {
       // Realiza la solicitud a tu API para actualizar el ítem
       await axios.put(
-        `http://localhost:3000/api/productos/${producto._id}`,
+        `http://honey-whispering-ragamuffin.glitch.me/api/productos/${producto._id}`,
         formulario
       );
       // Lógica adicional, como cerrar el modal o actualizar la lista de productos
@@ -39,7 +39,7 @@ const EditModal = ({ producto, showModal, onClose, recargarProductos }) => {
     try {
         // Realiza la solicitud a tu API para actualizar el ítem
         await axios.delete(
-            `http://localhost:3000/api/productos/${producto._id}`,
+            `http://honey-whispering-ragamuffin.glitch.me/api/productos/${producto._id}`,
             formulario
             );
             console.log("Borrando el item:", producto._id);
