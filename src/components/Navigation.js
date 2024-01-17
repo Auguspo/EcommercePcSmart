@@ -8,7 +8,7 @@ import Contacto from "../pages/Contacto";
 import Carrito from "../pages/Carrito";
 import Alta from "../pages/Alta";
 import CarritoDropdown from "./CarritoDropdown";
-
+import ListaPedidos from "../pages/ListaPedidos";
 function Navigation() {
   const [carrito, setCarrito] = useState([]);
 
@@ -53,6 +53,9 @@ function Navigation() {
             <Nav.Link className="text-white" as={Link} to="/Alta">
               Alta
             </Nav.Link>
+            <Nav.Link className="text-white" as={Link} to="/pedidos">
+              Pedidos
+            </Nav.Link>
           </Nav>
          
           <CarritoDropdown carrito={carrito} eliminarDelCarrito={eliminarDelCarrito} />
@@ -71,6 +74,7 @@ function Navigation() {
         <Route path="/contacto" element={<Contacto />} />
         <Route path="/alta" element={<Alta />} />
         <Route path="/carrito" element={<Carrito carrito={carrito} eliminarDelCarrito={eliminarDelCarrito} />} />
+        <Route path="/pedidos" element={<ListaPedidos />} />
       </Routes>
     </>
   );

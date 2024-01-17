@@ -13,8 +13,8 @@ const Shop = ({ agregarAlCarrito, carrito }) => {
     const obtenerProductos = async () => {
       try {
         const respuesta = await axios.get('https://honey-whispering-ragamuffin.glitch.me/api/productos');
-        setProductos(respuesta.data);
-        obtenerCategorias(respuesta.data);
+         setProductos(respuesta.data);
+          obtenerCategorias(respuesta.data);
       } catch (error) {
         console.error('Error al obtener productos:', error);
       }

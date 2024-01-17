@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container, Row, Col, ListGroup, Form, Button } from "react-bootstrap";
 import PagoMercadoPago from "../components/PagoMercadoPago";
+import axios from "axios";
 
 const CarritoCompra = ({ carrito, eliminarDelCarrito }) => {
   const [itemsCarrito, setItemsCarrito] = useState(carrito);
@@ -13,10 +14,12 @@ const CarritoCompra = ({ carrito, eliminarDelCarrito }) => {
 
   const [mostrarSeccionPago, setMostrarSeccionPago] = useState(false);
 
-  const precioTotal = itemsCarrito.reduce((total, item) => total + item.precio * item.cantidad, 0);
+  const precioTotal = itemsCarrito.reduce(
+    (total, item) => total + item.precio * item.cantidad,
+    0
+  );
 
   const handleActualizarCantidad = (itemId, cantidad) => {
-    // Actualiza la cantidad de un producto en el carrito
     const nuevosItems = itemsCarrito.map((item) =>
       item._id === itemId ? { ...item, cantidad } : item
     );
@@ -24,7 +27,6 @@ const CarritoCompra = ({ carrito, eliminarDelCarrito }) => {
   };
 
   const handleActualizarDireccion = (e) => {
-    // Actualiza la dirección de entrega
     const { name, value } = e.target;
     setDireccionEntrega((prevDireccion) => ({
       ...prevDireccion,
@@ -34,14 +36,38 @@ const CarritoCompra = ({ carrito, eliminarDelCarrito }) => {
 
   const handleEliminar = (productoId) => {
     eliminarDelCarrito(productoId);
-    setItemsCarrito(itemsCarrito.filter(item => item._id !== productoId));
-  };
-  const handleRealizarPedido = () => {
-    // Lógica para enviar el pedido a la API o realizar acciones adicionales
-    // Puedes agregar lógica adicional aquí, como mostrar un mensaje de éxito, etc.
-    setMostrarSeccionPago(true);
+    setItemsCarrito(itemsCarrito.filter((item) => item._id !== productoId));
   };
 
+  const handleRealizarPedido = async () => {
+    try {
+      const datosPedido = {
+        items: itemsCarrito.map((item) => ({
+          productoId: item._id,
+          cantidad: item.cantidad,
+        })),
+        direccionEntrega,
+        total: precioTotal.toFixed(2),
+      };
+      
+      const response = await axios.post(
+        "https://honey-whispering-ragamuffin.glitch.me/api/carrito",
+        datosPedido,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+  
+      console.log("Respuesta del servidor:", response.data);
+  
+      setMostrarSeccionPago(true);
+    } catch (error) {
+      console.error("Error al realizar el pedido:", error);
+    }
+  };
+  
   return (
     <Container className="mt-5 my-3">
       <Row>
@@ -60,7 +86,7 @@ const CarritoCompra = ({ carrito, eliminarDelCarrito }) => {
               </Row>
             </ListGroup.Item>
             {itemsCarrito.map((item) => (
-              <ListGroup.Item key={item.id}>
+              <ListGroup.Item key={item._id}>
                 <Row>
                   <Col>
                     {
@@ -101,7 +127,7 @@ const CarritoCompra = ({ carrito, eliminarDelCarrito }) => {
               <Row>
                 <Col className="fw-bold">Total: ${precioTotal.toFixed(2)}</Col>
               </Row>
-            </ListGroup.Item> 
+            </ListGroup.Item>
           </ListGroup>
         </Col>
 
@@ -151,14 +177,14 @@ const CarritoCompra = ({ carrito, eliminarDelCarrito }) => {
       </Row>
 
       {/* Sección de Pago */}
-      {mostrarSeccionPago && (
+      {/* {mostrarSeccionPago && (
         <Row className="mt-3">
           <Col>
             <h2>Completar Pago</h2>
-            <PagoMercadoPago />
+          
           </Col>
         </Row>
-      )}
+      )} */}
     </Container>
   );
 };
