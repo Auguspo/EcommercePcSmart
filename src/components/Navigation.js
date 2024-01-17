@@ -12,38 +12,39 @@ import ListaPedidos from "../pages/ListaPedidos";
 function Navigation() {
   const [carrito, setCarrito] = useState([]);
 
- 
-
   const agregarAlCarrito = (producto) => {
     const productoEnCarrito = carrito.find((item) => item._id === producto._id);
-  
+
     if (productoEnCarrito) {
       // El producto ya está en el carrito, incrementa la cantidad
       setCarrito(
         carrito.map((item) =>
-          item._id === producto._id ? { ...item, cantidad: item.cantidad + 1 } : item
+          item._id === producto._id
+            ? { ...item, cantidad: item.cantidad + 1 }
+            : item
         )
       );
     } else {
       // El producto no está en el carrito, agrégalo con cantidad 1
       setCarrito([...carrito, { ...producto, cantidad: 1 }]);
     }
-    
-    console.log(carrito)
+
+    console.log(carrito);
   };
   const eliminarDelCarrito = (productoId) => {
-    const nuevoCarrito = carrito.filter((producto) => producto._id !== productoId);
+    const nuevoCarrito = carrito.filter(
+      (producto) => producto._id !== productoId
+    );
     setCarrito(nuevoCarrito);
   };
   return (
     <>
       <Navbar className="bg-danger" variant="light">
-        <Container >
+        <Container>
           <Navbar.Brand className="text-white" as={Link} to="/">
             PCsmart
           </Navbar.Brand>
           <Nav className="me-auto ">
-            
             <Nav.Link className="text-white" as={Link} to="/shop">
               Shop
             </Nav.Link>
@@ -57,8 +58,11 @@ function Navigation() {
               Pedidos
             </Nav.Link>
           </Nav>
-         
-          <CarritoDropdown carrito={carrito} eliminarDelCarrito={eliminarDelCarrito} />
+
+          <CarritoDropdown
+            carrito={carrito}
+            eliminarDelCarrito={eliminarDelCarrito}
+          />
         </Container>
       </Navbar>
 
@@ -73,7 +77,15 @@ function Navigation() {
         />
         <Route path="/contacto" element={<Contacto />} />
         <Route path="/alta" element={<Alta />} />
-        <Route path="/carrito" element={<Carrito carrito={carrito} eliminarDelCarrito={eliminarDelCarrito} />} />
+        <Route
+          path="/carrito"
+          element={
+            <Carrito
+              carrito={carrito}
+              eliminarDelCarrito={eliminarDelCarrito}
+            />
+          }
+        />
         <Route path="/pedidos" element={<ListaPedidos />} />
       </Routes>
     </>

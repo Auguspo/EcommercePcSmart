@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
-import axios from "axios";
+import { actualizarProducto, eliminarProducto } from "../services/api";
 
-const EditModal = ({ producto, showModal, onClose, recargarProductos }) => {
+const EditModal = ({ producto, showModal, onClose }) => {
   const [formulario, setFormulario] = useState({
     titulo: producto.titulo,
     precio: producto.precio,
@@ -21,36 +21,25 @@ const EditModal = ({ producto, showModal, onClose, recargarProductos }) => {
     e.preventDefault();
 
     try {
-      // Realiza la solicitud a tu API para actualizar el ítem
-      await axios.put(
-        `http://honey-whispering-ragamuffin.glitch.me/api/productos/${producto._id}`,
-        formulario
-      );
-      // Lógica adicional, como cerrar el modal o actualizar la lista de productos
+      await actualizarProducto(producto._id, formulario);
       onClose();
+      
     } catch (error) {
       console.error("Error al actualizar el ítem:", error);
-      // Manejo de errores, por ejemplo, mostrar un mensaje al usuario
     }
   };
-  const handleBorrarProducto = async(e) => {
-    // Agrega aquí la lógica para borrar el item
+
+  const handleBorrarProducto = async (e) => {
     e.preventDefault();
     try {
-        // Realiza la solicitud a tu API para actualizar el ítem
-        await axios.delete(
-            `http://honey-whispering-ragamuffin.glitch.me/api/productos/${producto._id}`,
-            formulario
-            );
-            console.log("Borrando el item:", producto._id);
-        // Lógica adicional, como cerrar el modal o actualizar la lista de productos
-        onClose();
-      } catch (error) {
-        console.error("Error al borrar el ítem:", error);
-        // Manejo de errores, por ejemplo, mostrar un mensaje al usuario
-      }
+      await eliminarProducto(producto._id);
+      console.log("Borrando el item:", producto._id);
+      onClose();
+      
+    } catch (error) {
+      console.error("Error al borrar el ítem:", error);
+    }
   };
-
   return (
     <Modal show={showModal} onHide={onClose}>
       <Modal.Header closeButton>

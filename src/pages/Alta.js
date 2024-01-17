@@ -1,8 +1,7 @@
-// Alta.js
 import React, { useState } from 'react';
 import { Form, Button, Container, Modal } from 'react-bootstrap';
+import { agregarProducto } from '../services/api'; // Importar función desde api.js
 import axios from 'axios';
-
 const Alta = () => {
   const [formulario, setFormulario] = useState({
     titulo: '',
@@ -12,44 +11,39 @@ const Alta = () => {
     imagen: '',
     categoria: '', // Agregamos la categoría al formulario
   });
+
   const [showModal, setShowModal] = useState(false);
   const [itemAgregado, setItemAgregado] = useState(null);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      // Realiza la solicitud a tu API para agregar el ítem
-      const respuesta = await axios.post('http://honey-whispering-ragamuffin.glitch.me/api/productos/', formulario);
-      setItemAgregado(respuesta.data);
+      // Utiliza la función de la API para agregar el ítem
+      const respuesta = await agregarProducto(formulario);
+      setItemAgregado(respuesta);
       handleMostrarModal();
     } catch (error) {
       console.error('Error al agregar el ítem:', error);
       // Manejo de errores, por ejemplo, mostrar un mensaje al usuario
     }
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormulario({ ...formulario, [name]: value });
   };
 
   const handleMostrarModal = async () => {
-    try {
-      // Realiza la solicitud a tu API para agregar el ítem
-      const respuesta = await axios.post('http://honey-whispering-ragamuffin.glitch.me/api/productos/', formulario);
-      setItemAgregado(respuesta.data);
-      setShowModal(true);
-      // Llama a obtenerDetallesItem después de asignar respuesta.data a itemAgregado
-      obtenerDetallesItem(respuesta.data);
-    } catch (error) {
-      console.error('Error al agregar el ítem:', error);
-      // Manejo de errores, por ejemplo, mostrar un mensaje al usuario
-    }
+    setShowModal(true);
+    // Llama a obtenerDetallesItem después de asignar respuesta.data a itemAgregado
+    obtenerDetallesItem(itemAgregado);
   };
 
   const obtenerDetallesItem = async (item) => {
     try {
       // Realiza una solicitud GET para obtener los detalles del ítem recién agregado
-      const respuesta = await axios.get(`http://honey-whispering-ragamuffin.glitch.me/api/productos/${item._id}`);
+      const respuesta = await axios.get(`https://honey-whispering-ragamuffin.glitch.me/api/productos/${item._id}`);
       setItemAgregado(respuesta.data);
     } catch (error) {
       console.error('Error al obtener detalles del ítem:', error);
@@ -60,6 +54,7 @@ const Alta = () => {
     setShowModal(false);
     // Puedes realizar acciones adicionales al cerrar el modal si es necesario
   };
+
 
   return (
     <Container className='my-3'>

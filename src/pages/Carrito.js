@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Container, Row, Col, ListGroup, Form, Button } from "react-bootstrap";
 import PagoMercadoPago from "../components/PagoMercadoPago";
-import axios from "axios";
+
+import { agregarAlCarrito } from "../services/api";
 
 const CarritoCompra = ({ carrito, eliminarDelCarrito }) => {
   const [itemsCarrito, setItemsCarrito] = useState(carrito);
@@ -39,6 +40,7 @@ const CarritoCompra = ({ carrito, eliminarDelCarrito }) => {
     setItemsCarrito(itemsCarrito.filter((item) => item._id !== productoId));
   };
 
+  
   const handleRealizarPedido = async () => {
     try {
       const datosPedido = {
@@ -49,23 +51,21 @@ const CarritoCompra = ({ carrito, eliminarDelCarrito }) => {
         direccionEntrega,
         total: precioTotal.toFixed(2),
       };
-      
-      const response = await axios.post(
-        "https://honey-whispering-ragamuffin.glitch.me/api/carrito",
-        datosPedido,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-  
-      console.log("Respuesta del servidor:", response.data);
-  
+
+      const response = await agregarAlCarrito(datosPedido);
+
+      console.log("Respuesta del servidor:", response);
+
       setMostrarSeccionPago(true);
     } catch (error) {
       console.error("Error al realizar el pedido:", error);
     }
+    setItemsCarrito([]);
+    setDireccionEntrega({
+      calle: "",
+      ciudad: "",
+      codigoPostal: "",
+    });
   };
   
   return (

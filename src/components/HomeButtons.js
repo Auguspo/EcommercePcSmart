@@ -10,8 +10,8 @@ const HomeButtons = () => {
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    color: 'white', // Cambia el color del texto a blanco
-    textDecoration: 'none', // Elimina el subrayado del enlace
+    color: 'white', 
+    textDecoration: 'none', 
   };
 
   return (

@@ -1,26 +1,27 @@
-// Shop.js
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Container, Row, Col, ListGroup } from 'react-bootstrap';
 import CardProducto from '../components/CardProducto';
+import { obtenerProductos, agregarAlCarrito } from '../services/api'; 
+
 
 const Shop = ({ agregarAlCarrito, carrito }) => {
   const [productos, setProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
-  const [recargarProductos, setRecargarProductos] = useState(false); // Nuevo estado para controlar la recarga
+  const [recargarProductos, setRecargarProductos] = useState(false);
+
   useEffect(() => {
-    const obtenerProductos = async () => {
+    const fetchData = async () => {
       try {
-        const respuesta = await axios.get('https://honey-whispering-ragamuffin.glitch.me/api/productos');
-         setProductos(respuesta.data);
-          obtenerCategorias(respuesta.data);
+        const productosData = await obtenerProductos(); 
+        setProductos(productosData);
+        obtenerCategorias(productosData);
       } catch (error) {
         console.error('Error al obtener productos:', error);
       }
     };
 
-    obtenerProductos();
+    fetchData();
   }, [recargarProductos]);
 
   const obtenerCategorias = (productos) => {

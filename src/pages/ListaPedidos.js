@@ -1,40 +1,39 @@
-    import React, { useEffect, useState } from 'react';
-    import { Table, Container } from 'react-bootstrap';
-    import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Table, Container } from 'react-bootstrap';
+import { obtenerCarrito, obtenerProductos } from '../services/api'; // Importar funciones desde api.js
 
-    const ListaPedidos = () => {
-    const [pedidos, setPedidos] = useState([]);
-    const [productos, setProductos] = useState([]);
+const ListaPedidos = () => {
+  const [pedidos, setPedidos] = useState([]);
+  const [productos, setProductos] = useState([]);
 
-    useEffect(() => {
-        const fetchPedidos = async () => {
-        try {
-            const responsePedidos = await axios.get('https://honey-whispering-ragamuffin.glitch.me/api/carrito');
-            setPedidos(responsePedidos.data || []);
+  useEffect(() => {
+    const fetchPedidos = async () => {
+      try {
+        const carritoData = await obtenerCarrito();
+        setPedidos(carritoData || []);
 
-            // Obtener IDs únicos de productos
-            const uniqueProductIds = Array.from(new Set(responsePedidos.data.items.map(item => item.productoId.$oid)));
 
-            // Obtener información de productos
-            const responseProductos = await axios.get('https://honey-whispering-ragamuffin.glitch.me/api/productos');
-            setProductos(responseProductos.data);
+        // Obtener información de productos
+        const productosData = await obtenerProductos();
+        setProductos(productosData);
 
-        } catch (error) {
-            console.error('Error al obtener los pedidos:', error);
-        }
-        };
-
-        fetchPedidos();
-    }, []);
-
-    // Función para obtener el nombre del producto por ID
-    const getProductNameById = (productId) => {
-        const product = productos.find(product => product._id === productId);
-        return product ? product.titulo : 'Nombre no encontrado';
+     
+      } catch (error) {
+        console.error('Error al obtener los pedidos:', error);
+      }
     };
 
+    fetchPedidos();
+  }, []);
+
+  // Función para obtener el nombre del producto por ID
+  const getProductNameById = (productId) => {
+    const product = productos.find(product => product._id === productId);
+    return product ? product.titulo : 'Nombre no encontrado';
+  };
     return (
-        <Container>
+        <Container className='my-5'>
+                <h1>Ultimo Pedido</h1>
         <Table striped bordered hover>
             <thead>
             <tr>
@@ -46,7 +45,7 @@
             </thead>
             <tbody>
             <tr>
-                <td>{pedidos._id?.$oid || 'ID no encontrado'}</td>
+                <td>{pedidos._id || 'ID no encontrado'}</td>
                 <td>
                 {pedidos.direccionEntrega
                     ? `${pedidos.direccionEntrega.calle || ''}, ${pedidos.direccionEntrega.ciudad || ''} - CP: ${pedidos.direccionEntrega.codigoPostal || ''}`
