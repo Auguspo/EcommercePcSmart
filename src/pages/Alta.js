@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Modal } from 'react-bootstrap';
-import { agregarProducto } from '../services/api'; // Importar función desde api.js
-import axios from 'axios';
+import { agregarProducto, obtenerDetallesItem } from '../services/api'; 
+
 const Alta = () => {
   const [formulario, setFormulario] = useState({
     titulo: '',
@@ -9,7 +9,7 @@ const Alta = () => {
     descripcion: '',
     marca: '',
     imagen: '',
-    categoria: '',  
+    categoria: '',
   });
 
   const [showModal, setShowModal] = useState(false);
@@ -19,13 +19,17 @@ const Alta = () => {
     e.preventDefault();
 
     try {
-       
+      // Agregar el producto
       const respuesta = await agregarProducto(formulario);
       setItemAgregado(respuesta);
+
+      // Obtener detalles del ítem recién agregado
+      await obtenerDetallesItem(respuesta);
+      
+      // Mostrar el modal
       handleMostrarModal();
     } catch (error) {
       console.error('Error al agregar el ítem:', error);
-       
     }
   };
 
@@ -34,25 +38,12 @@ const Alta = () => {
     setFormulario({ ...formulario, [name]: value });
   };
 
-  const handleMostrarModal = async () => {
+  const handleMostrarModal = () => {
     setShowModal(true);
-     
-    obtenerDetallesItem(itemAgregado);
-  };
-
-  const obtenerDetallesItem = async (item) => {
-    try {
-       
-      const respuesta = await axios.get(`https://honey-whispering-ragamuffin.glitch.me/api/productos/${item._id}`);
-      setItemAgregado(respuesta.data);
-    } catch (error) {
-      console.error('Error al obtener detalles del ítem:', error);
-    }
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
-     
   };
 
 

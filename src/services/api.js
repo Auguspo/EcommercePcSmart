@@ -1,9 +1,9 @@
  
 import axios from 'axios';
 
-// const baseURL = 'https://honey-whispering-ragamuffin.glitch.me/api'; // Reemplaza con la URL de tu servidor
+ const baseURL = ' https://api-pcsmart.glitch.me/api'; 
 
-const baseURL = 'http://localhost:3000/api'
+
 const api = axios.create({
   baseURL,
   headers: {
@@ -68,4 +68,12 @@ export const eliminarProducto = async (idProducto) => {
   }
 };
 
- 
+export const obtenerDetallesItem = async (item) => {
+  try {
+    const respuesta = await api.get(`/productos/${item._id}`);
+    return respuesta.data;
+  } catch (error) {
+    console.error('Error al obtener detalles del ítem:', error);
+    throw error;
+  }
+};
