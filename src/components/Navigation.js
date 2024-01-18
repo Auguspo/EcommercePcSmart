@@ -16,7 +16,7 @@ function Navigation() {
     const productoEnCarrito = carrito.find((item) => item._id === producto._id);
 
     if (productoEnCarrito) {
-      // El producto ya está en el carrito, incrementa la cantidad
+       
       setCarrito(
         carrito.map((item) =>
           item._id === producto._id
@@ -25,7 +25,7 @@ function Navigation() {
         )
       );
     } else {
-      // El producto no está en el carrito, agrégalo con cantidad 1
+       
       setCarrito([...carrito, { ...producto, cantidad: 1 }]);
     }
 

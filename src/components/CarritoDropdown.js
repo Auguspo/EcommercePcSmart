@@ -14,7 +14,7 @@ const CarritoDropdown = ({ carrito, eliminarDelCarrito }) => {
   };
 
   const handleVerCarrito = () => {
-    // Puedes agregar aquí cualquier lógica adicional antes de cerrar el dropdown, si es necesario.
+     
     toggleDropdown();
   };
 

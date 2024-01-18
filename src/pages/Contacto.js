@@ -1,10 +1,10 @@
-// Contacto.js
+ 
 import React from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 
 const Contacto = () => {
   const handleEnviarCorreo = () => {
-    // Abre el cliente de correo predeterminado del usuario
+     
     window.location.href = 'mailto:contacto@tuempresa.com';
   };
 

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, ListGroup } from 'react-bootstrap';
 import CardProducto from '../components/CardProducto';
-import { obtenerProductos, agregarAlCarrito } from '../services/api'; 
+import { obtenerProductos } from '../services/api'; 
 
 
-const Shop = ({ agregarAlCarrito, carrito }) => {
+const Shop = ({ agregarAlCarrito }) => {
   const [productos, setProductos] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);

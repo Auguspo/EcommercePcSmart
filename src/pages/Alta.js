@@ -9,7 +9,7 @@ const Alta = () => {
     descripcion: '',
     marca: '',
     imagen: '',
-    categoria: '', // Agregamos la categoría al formulario
+    categoria: '',  
   });
 
   const [showModal, setShowModal] = useState(false);
@@ -19,13 +19,13 @@ const Alta = () => {
     e.preventDefault();
 
     try {
-      // Utiliza la función de la API para agregar el ítem
+       
       const respuesta = await agregarProducto(formulario);
       setItemAgregado(respuesta);
       handleMostrarModal();
     } catch (error) {
       console.error('Error al agregar el ítem:', error);
-      // Manejo de errores, por ejemplo, mostrar un mensaje al usuario
+       
     }
   };
 
@@ -36,13 +36,13 @@ const Alta = () => {
 
   const handleMostrarModal = async () => {
     setShowModal(true);
-    // Llama a obtenerDetallesItem después de asignar respuesta.data a itemAgregado
+     
     obtenerDetallesItem(itemAgregado);
   };
 
   const obtenerDetallesItem = async (item) => {
     try {
-      // Realiza una solicitud GET para obtener los detalles del ítem recién agregado
+       
       const respuesta = await axios.get(`https://honey-whispering-ragamuffin.glitch.me/api/productos/${item._id}`);
       setItemAgregado(respuesta.data);
     } catch (error) {
@@ -52,7 +52,7 @@ const Alta = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    // Puedes realizar acciones adicionales al cerrar el modal si es necesario
+     
   };
 
 

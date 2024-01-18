@@ -1,8 +1,9 @@
-// src/services/api.js
+ 
 import axios from 'axios';
 
-const baseURL = 'https://honey-whispering-ragamuffin.glitch.me/api'; // Reemplaza con la URL de tu servidor
+// const baseURL = 'https://honey-whispering-ragamuffin.glitch.me/api'; // Reemplaza con la URL de tu servidor
 
+const baseURL = 'http://localhost:3000/api'
 const api = axios.create({
   baseURL,
   headers: {
@@ -10,7 +11,7 @@ const api = axios.create({
   },
 });
 
-// Funciones para el recurso /carrito
+ 
 export const obtenerCarrito = async () => {
   try {
     const response = await api.get('/carrito');
@@ -29,7 +30,7 @@ export const agregarAlCarrito = async (datosPedido) => {
   }
 };
 
-// Funciones para el recurso /productos
+ 
 export const obtenerProductos = async () => {
   try {
     const response = await api.get('/productos');
@@ -67,4 +68,4 @@ export const eliminarProducto = async (idProducto) => {
   }
 };
 
-// Puedes agregar más funciones según tus necesidades
+ 

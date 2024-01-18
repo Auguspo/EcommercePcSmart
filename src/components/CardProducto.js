@@ -23,7 +23,7 @@ const CardProducto = ({ producto, agregarAlCarrito, recargarProductos }) => {
   };
 
   const handleRecargarProductos = () => {
-    // Verifica que recargarProductos sea una función antes de intentar llamarla
+     
     recargarProductos();
   };
 

@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
-import { Form, Button } from 'react-bootstrap';
+import React, { useState } from "react";
+import { Form, Button } from "react-bootstrap";
 
 const PagoMercadoPago = ({ total, onCompletePayment }) => {
-  const [tarjeta, setTarjeta] = useState('');
-  const [nombreTitular, setNombreTitular] = useState('');
-  const [fechaVencimiento, setFechaVencimiento] = useState('');
-  const [cvv, setCVV] = useState('');
+  const [tarjeta, setTarjeta] = useState("");
+  const [nombreTitular, setNombreTitular] = useState("");
+  const [fechaVencimiento, setFechaVencimiento] = useState("");
+  const [cvv, setCVV] = useState("");
 
   const handlePagar = () => {
-    // Aquí puedes enviar la información de pago a tu servidor para realizar la transacción con MercadoPago
     const datosPago = {
       tarjeta,
       nombreTitular,
@@ -17,10 +16,6 @@ const PagoMercadoPago = ({ total, onCompletePayment }) => {
       total,
     };
 
-    // Lógica para enviar datos a tu servidor y completar el pago con MercadoPago
-    // ...
-
-    // Luego, puedes ejecutar onCompletePayment() para realizar acciones adicionales después del pago
     onCompletePayment();
   };
 
